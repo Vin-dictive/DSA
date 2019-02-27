@@ -1,0 +1,203 @@
+/*a) Write C++ program to store roll numbers of student in array who attended training
+program in random order. Write function for searching whether particular student
+attended training program or not using linear search and sentinel search.
+b) Write C++ program to store roll numbers of student array who attended training
+program in sorted order. Write function for searching whether particular student
+attended training program or not using binary search and Fibonacci search.*/
+#include <stdio.h>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+void swap(int* a, int* b)
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+int partition (int arr[], int low, int high)
+{
+
+    int pivot = arr[high];    // pivot
+    int i = (low - 1);  // Index of smaller element
+
+    for (int j = low; j <= high- 1; j++)
+    {
+        if (arr[j] <= pivot)
+        {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+void quickSort(int arr[], int low, int high)
+{
+    if (low < high)
+    {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+
+}
+
+int fibonacci(int n)
+{
+    if((n==1)||(n==0))
+    {
+        return(n);
+    }
+    else
+    {
+        return(fibonacci(n-1)+fibonacci(n-2));
+    }
+}
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+int main ()
+{
+  int n,x;
+  cout<<"Enter the size of the list:";
+  cin>>n;
+  int roll[n];
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+
+  cout<<"Enter the name of Roll no. who attended the classes:-\n";
+    for(int i=0;i<n;i++)
+    {
+      if(roll[i-1]==97)
+      {
+        break;
+      }
+      cin>>roll[i];
+
+    }
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////LINEAR SEARCH///////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  cout<<"\n//////////////////////////////////////////////////////////////";
+  cout<<"\n/////////////////////LINEAR SEARCH////////////////////////////\n";
+
+  int t;
+  int flag=0;
+  cout<<"\nEnter the roll no. u want to search for:";
+  cin>>t;
+  for(int i=0;i<n;i++)
+  {
+    if(roll[i]==t)
+    {
+      cout<<"Element found at position:"<<i+1<<endl;
+      flag=1;
+    }
+  }
+  if(flag==0)
+  {
+    cout<<"\nNo Element with the given number was found\n";
+  }
+  ///////////////////////////////////////////////////////////////////////
+  ////////////////////////////SENTINEL SEARCH////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  cout<<"\n//////////////////////////////////////////////////////////////";
+  cout<<"\n///////////////////SENTINEL SEARCH////////////////////////////\n";
+  int last=roll[n-1];
+  cout<<"\nEnter the roll no. u want to search for:";
+  cin>>t;
+  roll[n-1]=t;
+  int w=0;
+  while(roll[w]!=t)
+  {
+    w++;
+  }
+  roll[n-1]=last;
+  if((w<n-1)||(t==roll[n-1]))
+  {
+    cout<<"\nItem Found @ "<<w+1;
+  }
+  else
+  {
+    cout<<"\nItem not Found";
+  }
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  cout<<"\n//////////////////////////////////////////////////////////////";
+  cout<<"\n//////////////////Selection Sorting///////////////////////////\n";
+  int temp;
+  for(int i=0;i<n;i++)
+  {
+    for(int j=i+1;j<n;j++)
+    {
+      if(roll[i]<roll[j])
+      {
+        swap(&roll[i],&roll[j]);
+      }
+    }
+  }
+  cout<<"\n//////////////////////////////////////////////////////////////";
+  cout<<"\n//////////////////////////////////////////////////////////////";
+  cout<<"\nSorted list is :";
+  for(int i=0;i<n;i++)
+  {
+    cout<<roll[i]<<" ";
+  }
+
+
+  cout<<"\n//////////////////////////////////////////////////////////////";
+  cout<<"\n////////////////////QUICK Sorting////////////////////////////\n";
+
+  quickSort(roll, 0, n-1);
+  cout<<"\n//////////////////////////////////////////////////////////////";
+  cout<<"\n//////////////////////////////////////////////////////////////";
+  cout<<"\nSorted list is :";
+  for(int i=0;i<n;i++)
+  {
+    cout<<roll[i]<<" ";
+  }
+  cout<<"\n//////////////////////////////////////////////////////////////";
+  cout<<"\n///////////////////////BINARY SEARCH//////////////////////////";
+  cout<<"\nEnter the roll no. u want to search for:";
+  cin>>t;
+  if(binary_search(roll,roll+n,t))
+  {
+    cout<<"\nElement Found!!";
+  }
+  else
+  {
+    cout<<"\nElement not Found!!";
+  }
+
+  cout<<"\n//////////////////////////////////////////////////////////////";
+  cout<<"\n//////////////////////FIBONNACCI SEARCH//////////////////////////";
+  cout<<"\nEnter the roll no. u want to search for:";
+  cin>>t;
+  int fib[n];
+  int k;
+  int i=0;
+  while(i<n)
+   {
+       fib[i]=fibonacci(i);
+       i++;
+   }
+   for(int i=0;i<n;i++)
+   {
+     if(fib[i]>=n)
+     {
+       k=i;
+     }
+   }
+  int mid=n-fib[k-2]+1;
+  int p=fib[k-2];
+  int q=fib[k-3];
+  return 0;
+}
